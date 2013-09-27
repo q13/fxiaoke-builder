@@ -36,22 +36,6 @@ module.exports = function(grunt) {
                 }]
             }
         },
-        "concat": {
-            options: {
-                stripBanners: true,
-                banner: '/**\n' +
-                    ' * 纷享自定制版arale.js\n'+
-                ' * @Author: 纷享网页前端部\n'+
-                ' * @Date: <%= grunt.template.today("yyyy-mm-dd") %>\n'+
-                ' */\n'
-            },
-            seajs: {
-                files: [{
-                    src: ['fs-dist/assets/seajs/sea-modules/arale/**/*.js', '!fs-dist/assets/seajs/sea-modules/arale/**/*-debug.js'],
-                    dest: 'fs-dist/assets/seajs/dist/all.js'
-                }]
-            }
-        },
         "imagemin": {                          // Task
             assets: {                         // Another target
                 options: {                       // Target options
@@ -72,6 +56,28 @@ module.exports = function(grunt) {
                 parsers: {
                     '.js': [script.jsParser]
                 }
+            },
+            jslibs: {
+                "options":{
+                    "idleading":"jslibs/"
+                },
+                files: [{
+                    expand:true,
+                    cwd: 'fs-dist/assets/js/',
+                    src: 'util.js',
+                    dest: 'fs-dist/assets/js/'
+                }]
+            },
+            uilibs:{
+                "options":{
+                    "idleading":"uilibs/"
+                },
+                files: [{
+                    expand:true,
+                    cwd: 'fs-dist/assets/uilibs/',
+                    src: ['**/*.js','!**/all.js'],
+                    dest: 'fs-dist/assets/uilibs/'
+                }]
             },
             modules: {
                 "options":{
@@ -103,12 +109,42 @@ module.exports = function(grunt) {
                  comments: true*/
             },
             assets: {
+                options:{
+                    banner: '/**\n' +
+                        ' * 纷享资源脚本\n'+
+                        ' * @Author: 纷享网页前端部\n'+
+                        ' * @Date: <%= grunt.template.today("yyyy-mm-dd") %>\n'+
+                        ' */\n'
+                },
                 files: [{
                     src: 'fs-dist/assets/js/underscore.js',
                     dest: 'fs-dist/assets/js/underscore.js'
                 },{
+                    src: 'fs-dist/assets/js/underscore.string.js',
+                    dest: 'fs-dist/assets/js/underscore.string.js'
+                },{
                     src: 'fs-dist/assets/js/backbone.js',
                     dest: 'fs-dist/assets/js/backbone.js'
+                },{
+                    src: 'fs-dist/assets/js/common.js',
+                    dest: 'fs-dist/assets/js/common.js'
+                },{
+                    src: 'fs-dist/assets/js/util.js',
+                    dest: 'fs-dist/assets/js/util.js'
+                }/*,{
+                    src: 'fs-dist/assets/js/app.js',
+                    dest: 'fs-dist/assets/js/app.js'
+                },{
+                    src: 'fs-dist/assets/js/prepare.js',
+                    dest: 'fs-dist/assets/js/prepare.js'
+                }*/]
+            },
+            uilibs:{
+                files: [{
+                    expand: true,
+                    cwd: 'fs-dist/assets/uilibs/',
+                    src: ['**/*.js'],
+                    dest: 'fs-dist/assets/uilibs/'
                 }]
             },
             modules: {
@@ -145,6 +181,28 @@ module.exports = function(grunt) {
             }
         },
         "cssmin": {
+            assets: {
+                options:{
+                    banner: '/**\n' +
+                        ' * 纷享资源样式\n'+
+                        ' * @Author: 纷享网页前端部\n'+
+                        ' * @Date: <%= grunt.template.today("yyyy-mm-dd") %>\n'+
+                        ' */\n'
+                },
+                files: [{
+                    src: 'fs-dist/assets/style/base.css',
+                    dest: 'fs-dist/assets/style/base.css'
+                },{
+                    src: 'fs-dist/assets/style/ui.css',
+                    dest: 'fs-dist/assets/style/ui.css'
+                },{
+                    src: 'fs-dist/assets/style/common.css',
+                    dest: 'fs-dist/assets/style/common.css'
+                },{
+                    src: 'fs-dist/assets/style/app.css',
+                    dest: 'fs-dist/assets/style/app.css'
+                }]
+            },
             modules: {
                 options:{
                     banner: '/**\n' +
@@ -200,6 +258,59 @@ module.exports = function(grunt) {
                 }]
             }
         },
+        "concat": {
+            options: {
+                stripBanners: true
+            },
+            seajs: {
+                options: {
+                    banner: '/**\n' +
+                        ' * 纷享自定制版arale.js\n'+
+                        ' * @Author: 纷享网页前端部\n'+
+                        ' * @Date: <%= grunt.template.today("yyyy-mm-dd") %>\n'+
+                        ' */\n'
+                },
+                files: [{
+                    src: ['fs-dist/assets/seajs/sea-modules/arale/**/*.js', '!fs-dist/assets/seajs/sea-modules/arale/**/*-debug.js'],
+                    dest: 'fs-dist/assets/seajs/dist/all.js'
+                },{
+                    src: ['fs-dist/assets/style/base.css','fs-dist/assets/style/ui.css','fs-dist/assets/style/common.css','fs-dist/assets/style/app.css'],
+                    dest: 'fs-dist/assets/style/all.css'
+                },{
+                    src: ['fs-dist/assets/js/underscore.js','fs-dist/assets/js/underscore.string.js','fs-dist/assets/js/backbone.js'],
+                    dest: 'fs-dist/assets/js/all.js'
+                }]
+            },
+            assets:{
+                options:{
+                    banner: '/**\n' +
+                        ' * 纷享资源文件\n'+
+                        ' * @Author: 纷享网页前端部\n'+
+                        ' * @Date: <%= grunt.template.today("yyyy-mm-dd") %>\n'+
+                        ' */\n'
+                },
+                files:[{
+                    src: ['fs-dist/assets/style/base.css','fs-dist/assets/style/ui.css','fs-dist/assets/style/common.css','fs-dist/assets/style/app.css'],
+                    dest: 'fs-dist/assets/style/all.css'
+                },{
+                    src: ['fs-dist/assets/js/underscore.js','fs-dist/assets/js/underscore.string.js','fs-dist/assets/js/backbone.js'],
+                    dest: 'fs-dist/assets/js/all.js'
+                }]
+            },
+            uilibs:{
+                options:{
+                    banner: '/**\n' +
+                        ' * aralejs组件包装\n'+
+                        ' * @Author: 纷享网页前端部\n'+
+                        ' * @Date: <%= grunt.template.today("yyyy-mm-dd") %>\n'+
+                        ' */\n'
+                },
+                files:[{
+                    src: ['fs-dist/assets/uilibs/**/*.js', '!fs-dist/assets/uilibs/all.js'],
+                    dest: 'fs-dist/assets/uilibs/all.js'
+                }]
+            }
+        },
         "clean": {
             modules: {
                 files: [{
@@ -249,6 +360,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     //grunt.loadNpmTasks('grunt-cmd-concat');
 
-    grunt.registerTask('default', ['copy','concat','imagemin','transport','uglify','cssmin','htmlmin']);
+    grunt.registerTask('default', ['copy','imagemin','transport','uglify','cssmin','htmlmin','concat']);
     grunt.registerTask('clean-all', ['clean:all']);
 };
